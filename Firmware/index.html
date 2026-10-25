@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#06141b">
+  <title>The Five Seals</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="game" aria-label="The Five Seals 3D game"></main>
+
+  <section id="intro" class="screen-layer">
+    <div class="intro-glow"></div>
+    <div class="intro-card">
+      <p class="eyebrow">An island escape</p>
+      <h1>The Five Seals</h1>
+      <p class="story">A storm has chained you to five forgotten islands. Read the ancient clues as the tide turns, awaken four seals, challenge the Tidewarden, and steal the key to the only ship beyond the reef.</p>
+      <div class="intro-islands" aria-label="Five island names">
+        <span>Dawnwatch</span><i></i><span>Coral Vault</span><i></i><span>Emerald Reach</span><i></i><span>Moonwell</span><i></i><span>Ashen Crown</span>
+      </div>
+      <button id="start-button" class="primary-button" disabled><span>Loading the islands…</span></button>
+      <div class="controls-grid">
+        <div><kbd>WASD</kbd><span>Move</span></div>
+        <div><kbd>Mouse</kbd><span>Look</span></div>
+        <div><kbd>E</kbd><span>Interact</span></div>
+        <div><kbd>F / Click</kbd><span>Attack</span></div>
+        <div><kbd>Space</kbd><span>Jump</span></div>
+        <div><kbd>Shift</kbd><span>Sprint</span></div>
+      </div>
+      <button id="sound-button" class="text-button" type="button">Sound: on</button>
+    </div>
+  </section>
+
+  <section id="hud" class="hidden" aria-live="polite">
+    <div class="hud-top-left glass-card">
+      <div class="hud-row"><span id="location">Dawnwatch Cay</span><span id="timer">00:00</span></div>
+      <p id="objective">Find the rune altar and decode the inscription.</p>
+    </div>
+    <div class="hud-top-right glass-card">
+      <div class="health-label"><span> vitality</span><strong id="health-text">100</strong></div>
+      <div class="bar"><i id="health-fill"></i></div>
+      <div id="seal-list" class="seal-list" aria-label="Seal progress"></div>
+    </div>
+    <div id="boss-hud" class="boss-hud hidden">
+      <div><span>The Tidewarden</span><strong id="boss-health-text">120 / 120</strong></div>
+      <div class="boss-bar"><i id="boss-health-fill"></i></div>
+    </div>
+    <div id="crosshair" class="crosshair"><i></i></div>
+    <div id="interaction" class="interaction hidden"><kbd>E</kbd><span></span></div>
+    <div id="toast" class="toast"></div>
+    <div class="hud-bottom glass-card">
+      <span><kbd>WASD</kbd> move</span><span><kbd>E</kbd> use</span><span><kbd>F</kbd> attack</span><span><kbd>J</kbd> journal</span>
+    </div>
+    <div id="damage-vignette"></div>
+  </section>
+
+  <section id="puzzle-modal" class="modal-layer hidden" role="dialog" aria-modal="true" aria-labelledby="puzzle-title">
+    <div id="puzzle-card" class="modal-card puzzle-card">
+      <p class="eyebrow">Clue recovered</p>
+      <h2 id="puzzle-title">Rune altar</h2>
+      <div class="clue-scroll"><span aria-hidden="true">“</span><p id="clue-text"></p><span aria-hidden="true">”</span></div>
+      <p class="instruction">Press the four marks in the order described by the clue.</p>
+      <div id="sequence-display" class="sequence-display" aria-label="Selected sequence"></div>
+      <div id="rune-buttons" class="rune-buttons"></div>
+      <div class="modal-actions"><button id="reset-sequence" class="secondary-button">Reset marks</button><button id="close-puzzle" class="primary-button compact">Step away</button></div>
+    </div>
+  </section>
+
+  <section id="journal-modal" class="modal-layer hidden" role="dialog" aria-modal="true" aria-labelledby="journal-title">
+    <div class="modal-card journal-card">
+      <p class="eyebrow">Your discoveries</p>
+      <h2 id="journal-title">Clue journal</h2>
+      <div id="journal-list" class="journal-list"></div>
+      <button id="close-journal" class="primary-button compact">Return</button>
+    </div>
+  </section>
+
+  <section id="death-screen" class="screen-layer hidden">
+    <div class="end-card death-card">
+      <p class="eyebrow">The islands remain</p>
+      <h2>You were overwhelmed</h2>
+      <p>The storm drags you back to the shore. Try the clues again and keep moving when the Tidewarden strikes.</p>
+      <button id="retry-button" class="primary-button">Try again</button>
+    </div>
+  </section>
+
+  <section id="victory-screen" class="screen-layer hidden">
+    <div class="end-card victory-card">
+      <p class="eyebrow">Beyond the reef</p>
+      <h2>You escaped the Five Seals</h2>
+      <p>The key turns, the storm parts, and the islands sink into the horizon behind you.</p>
+      <div class="stats"><div><span>Time</span><strong id="final-time">00:00</strong></div><div><span>Clues</span><strong id="final-clues">0 / 4</strong></div><div><span>Tidewarden</span><strong>Defeated</strong></div></div>
+      <button id="play-again" class="primary-button">Sail again</button>
+    </div>
+  </section>
+
+  <div id="cinematic-bars" class="cinematic-bars hidden"><i></i><i></i></div>
+
+  <div id="mobile-controls" class="hidden">
+    <div id="look-zone"></div>
+    <div id="joystick"><i></i></div>
+    <button id="mobile-action">E</button>
+    <button id="mobile-attack">HIT</button>
+    <button id="mobile-jump">JUMP</button>
+  </div>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/entities.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
